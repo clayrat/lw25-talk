@@ -1,5 +1,5 @@
 {-# OPTIONS --no-exact-split #-}
-module ch2.Ix.DPLIans where
+module SAT.DPLIans where
 
 open import Prelude
 open import Foundations.Base
@@ -60,14 +60,14 @@ open import LFSet
 open import LFSet.Membership
 open import LFSet.Discrete as LFSet
 
-open import ch2.Formula using (Var)
-open import ch2.Sem
-open import ch2.Appl
-open import ch2.Ix.Formula
-open import ch2.Ix.NF
-open import ch2.Ix.CNF
-open import ch2.Ix.DPans
-open import ch2.Ix.DPLLans
+open import SAT.Formula0 using (Var)
+open import SAT.Sem
+open import SAT.Appl
+open import SAT.Formula
+open import SAT.NF
+open import SAT.CNF
+open import SAT.DPans
+open import SAT.DPLLans
 
 private variable
   A : 𝒰
@@ -886,7 +886,7 @@ dpli-loop {Γ} cls {x = x , y} ih tr ti ti2 rj ri ex ey =
             (λ ne → dpli-loop-guess cls ih tr  ti  ti2  rj ri ex ey
                                     cls'   tr' ti' ti2' us' ps ne refl)
             (Dec-is-nil? {xs = ps})
-    
+
 dpli : CNF Γ → Maybe SatMap
 dpli {Γ} c =
   Box∷×.fix∷× TSI-ty
@@ -902,15 +902,22 @@ dpli {Γ} c =
 dplisat : Formulaᵢ Γ → Maybe SatMap
 dplisat = dpli ∘ snd ∘ defcnfs
 
+dplitaut : Formulaᵢ Γ → Bool
+dplitaut = not ∘ is-just? ∘ dplisat ∘ Not
+
 main : Main
 main =
   run $
-  do let m1 = dplisat (chk f1)
+  do put-str-ln $ "prime(DPLI) 13: " ++ₛ ppFBᵢ dplitaut (prime 13)
+     put-str-ln $ "prime(DPLI) 14: " ++ₛ ppFBᵢ dplitaut (prime 14)
+     {-
+     let m1 = dplisat (chk f1)
      put-str-ln $ "IXLIF1: " ++ₛ show (map showmp m1)
      put-str-ln $ "IXLIF1-test: " ++ₛ show (map (eval-map f1) m1)
      put-str-ln $ "IXLIF1-dtest: " ++ₛ show (map (eval-map (ers $ snd $ defcnf' $ chk f1)) m1)
-     
+
      let m2 = dplisat (chk f2)
      put-str-ln $ "IXLIF2: " ++ₛ show (map showmp m2)
      put-str-ln $ "IXLIF2-test: " ++ₛ show (map (eval-map f2) m2)
      put-str-ln $ "IXLIF2-dtest: " ++ₛ show (map (eval-map (ers $ snd $ defcnf' $ chk f2)) m2)
+     -}

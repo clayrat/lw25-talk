@@ -1,5 +1,5 @@
 {-# OPTIONS --no-exact-split #-}
-module ch2.Ix.DPLI where
+module SAT.DPLI where
 
 open import Prelude
 open import Foundations.Base
@@ -59,14 +59,14 @@ open import LFSet
 open import LFSet.Membership
 open import LFSet.Discrete as LFSet
 
-open import ch2.Formula using (Var)
-open import ch2.Sem
-open import ch2.Appl
-open import ch2.Ix.Formula
-open import ch2.Ix.NF
-open import ch2.Ix.CNF
-open import ch2.Ix.DP
-open import ch2.Ix.DPLL
+open import SAT.Formula0 using (Var)
+open import SAT.Sem
+open import SAT.Appl
+open import SAT.Formula
+open import SAT.NF
+open import SAT.CNF
+open import SAT.DP
+open import SAT.DPLL
 
 private variable
   A : 𝒰
